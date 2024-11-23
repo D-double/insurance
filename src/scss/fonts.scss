@@ -1,0 +1,13 @@
+$fonts: ("Bd", 700),
+("ExBd", 800),
+("Md", 500),
+("Rg", 400);
+
+
+@each $name, $weight in $fonts {
+  @font-face {
+    font-family: 'Noah';
+    src: url(../assets/fonts/Noah-Trial-#{$name}.ttf);
+    font-weight:  $weight;
+  }
+}

@@ -1,0 +1,24 @@
+.date {
+  display: flex;
+  
+  &__wrapper {
+    position: relative;
+  }
+
+  &__img {
+    width: 20px;
+  }
+  
+  &__picker {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    transform: scale(0);
+    transition: 0.5s;
+    transform-origin: 100% 0;
+
+    &.active {
+      transform: scale(1);
+    }
+  }
+}

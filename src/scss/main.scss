@@ -1,0 +1,51 @@
+@use './fonts.scss';
+
+:root {
+  --font-base: 'Noah';
+  --body: #EFF2FB;
+  --color: #636368;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-base);
+  background: var(--body);
+  color: var(--color);
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+ul {
+  list-style: none;
+}
+
+button,
+input,
+textarea {
+  border: none;
+  outline: none;
+  cursor: pointer;
+  background: none;
+  font-family: 'OpenSans';
+  color: inherit;
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.container {
+  max-width: 747px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 12px;
+}
