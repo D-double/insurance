@@ -10,29 +10,31 @@ import { IPayData } from '../../types'
 import getDayOptions from '../../utils/getDayOptions'
 
 interface DateSelectProps {
-  field: ControllerRenderProps<IPayData>,
+  field: ControllerRenderProps<IPayData, "startDate" | 'endDate'>,
   showDefault?: boolean
 }
 const DateSelect: FC<DateSelectProps> = ({ field, showDefault }) => {
-  
   const { onChange, value} = field;
   const [showDate, setShowDate] = useState(showDefault);
-  const currentDate = new Date()
-  const [startDate, setStartDate] = useState(currentDate);
+  const [startDate, setStartDate] = useState(value);
   const [show, setShow] = useState(false);
-  const [month, setMonth] = useState(currentDate.getMonth()+1);
-  const [year, setYear] = useState(currentDate.getFullYear());
-  const [day, setDay] = useState(currentDate.getDate());
+  const [month, setMonth] = useState(value.getMonth()+1);
+  const [year, setYear] = useState(value.getFullYear());
+  const [day, setDay] = useState(value.getDate());
   const dayOptions = getDayOptions(year, month)
   const monthsOptions = [ "Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь", ].map((elem, index)=>({
     value: index+1, label: elem
   }));
-  const yearsOptions = getArrayNums(currentDate.getFullYear(), currentDate.getFullYear()+100).map((elem)=>({
+  const yearsOptions = getArrayNums(value.getFullYear(), value.getFullYear()+100).map((elem)=>({
     value: elem, label: elem
   }));
   const changeStartDate = ()=>{
     setStartDate(new Date(year, month-1, day))
     return ()=>{setShowDate(true);}
+  }
+  const changeHandler = (date: Date | null) => {
+    if(date) setStartDate(date); 
+    onChange(date)
   }
   useEffect(changeStartDate, [day, month, year])
   useEffect(()=>{
@@ -74,7 +76,7 @@ const DateSelect: FC<DateSelectProps> = ({ field, showDefault }) => {
         <div className={`${s.date__picker} ${show ? s.active : ''}`}>
           <DatePicker
             selected={value}
-            onChange={(date) => {setStartDate(date); onChange(date)}}
+            onChange={changeHandler}
             inline
           />
         </div>

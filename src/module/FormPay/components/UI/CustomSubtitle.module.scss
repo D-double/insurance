@@ -4,6 +4,11 @@ $size: 18px;
   display: flex;
   justify-content: space-between;
   margin-right: 30px;
+
+  @media(max-width: 450px){
+    margin-right: 0;
+    margin-top: 10px;
+  }
   &__name {
     font-size: $size;
   }

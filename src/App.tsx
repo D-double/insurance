@@ -1,13 +1,9 @@
-import Slider from "./module/Slider/Slider"
+import Offer from "./pages/Offer/Offer"
 
 
 function App() {
-
   return (
-    <div className="container">
-      <Slider/>
-      
-    </div>
+    <Offer/>
   )
 }
 

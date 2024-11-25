@@ -7,14 +7,13 @@ import CustomInput from './components/UI/CustomInput';
 import DateSelect from './components/DateSelect/DateSelect';
 import PhoneInput from 'react-phone-input-2'
 import 'react-phone-input-2/lib/style.css'
-import { activities } from '../../../data.ts'
 import './assets/custom-select.scss'
 import sliderStore from '../../store/sliderStore.ts';
 import formPayStore from '../../store/formPayStore.ts';
 
 const FormPay = () => {
-  const {setHide} = sliderStore();
-  const {activities:activitiesChecked, setActivities, countsList, counts, setCounts, countries } = formPayStore();
+  const { setHide } = sliderStore();
+  const { activitiesList, activities: activitiesChecked, setActivities, countsList, counts, setCounts, startDate, endDate, phoneNum, selectedCountry, setSelectedCountry, setStartDate, setEndDate, setPhoneNum } = formPayStore();
   const {
     control,
     register,
@@ -23,27 +22,42 @@ const FormPay = () => {
     formState: {
       errors,
     }
-  } = useForm<IPayData>({ 
-    mode: 'onChange',
+  } = useForm<IPayData>({
+    mode: 'onBlur',
     defaultValues: {
-      selectedCountrie: countries[0],
+      selectedCountry,
+      startDate,
+      endDate,
+      phoneNum
     },
   });
-  
+  const errorsValue = Object.values(errors);
   const payData: SubmitHandler<IPayData> = async (data) => {
     try {
+      const { selectedCountry, counts, startDate, endDate, activities, phoneNum } = data;
+      setSelectedCountry(selectedCountry)
+      setCounts(counts)
+      setStartDate(startDate)
+      setEndDate(endDate)
+      setActivities(activities)
+      if (!errorsValue.length && phoneNum) {
+        setPhoneNum(phoneNum)
+        setHide(false)
+      }
+      reset()
       console.log(data);
     } catch (error) {
       console.log(error);
     }
     reset()
   }
+  // console.log(phoneNum);
   return (
     <form onSubmit={handleSubmit(payData)} className={s.pay}>
       <div className={s.pay__wrapper}>
         <CustomSubtitle title='Страна путешествия' help='Страна путешествия' />
         <Controller
-          name="selectedCountrie"
+          name="selectedCountry"
           control={control}
           render={({ field }) => (
             <CountrySelect field={field} />
@@ -53,13 +67,13 @@ const FormPay = () => {
       <div className={s.pay__wrapper}>
         <CustomSubtitle title='Тип покрытия' help='Тип покрытия' />
         {
-          countsList.map((elem)=>(
+          countsList.map((elem) => (
             <CustomInput
               key={elem.id}
               register={
                 register('counts', {
-                  onChange:(e)=>{
-                      setCounts(+e.target.value);
+                  onChange: (e) => {
+                    setCounts(+e.target.value);
                   }
                 })
               }
@@ -93,17 +107,17 @@ const FormPay = () => {
             <DateSelect field={field} />
           )}
         />
-        {activities && (
+        {activitiesList && (
           <>
             <CustomSubtitle title='Цель' help='Цель' />
             <div className={s.pay__activities}>
               {
-                activities.map((elem) => (
+                activitiesList.map((elem) => (
                   <CustomInput
                     register={
                       register('activities', {
-                        onChange:(e)=>{
-                            setActivities(+e.target.value);
+                        onChange: (e) => {
+                          setActivities(+e.target.value);
                         }
                       })
                     }
@@ -125,20 +139,27 @@ const FormPay = () => {
         <CustomSubtitle title='Номер мобильного телефона' help='Номер мобильного телефона' />
         <Controller
           name="phoneNum"
-          // rules={{
-          //   required: true,
-          // }}
+          rules={{
+            required: {
+              value: true,
+              message: 'Телефон обязателен для заполнения'
+            },
+          }}
           control={control}
-          render={({ field }) => (
+          render={({ field: { onChange, onBlur } }) => (
             <PhoneInput
-              {...field}
               placeholder="Enter phone number"
               country="uz"
+              value={phoneNum}
+              onChange={onChange}
+              onBlur={onBlur}
+              inputClass={s.pay__phone}
             />
           )}
         />
+        <p className={s.pay__error}>{errors.phoneNum && <>{errors.phoneNum.message}</>}</p>
       </div>
-      <button className={s.pay__btn} onClick={() => {setHide(false)} }>Далее</button>
+      <button className={s.pay__btn}>Далее</button>
     </form>
   )
 }

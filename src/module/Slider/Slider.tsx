@@ -3,7 +3,7 @@ import Programs from '../Programs/Programs'
 import FormPay from '../FormPay/FormPay'
 import './slider.scss'
 import PrevButton from './component/PrevButton';
-import Transition from './component/transition';
+import Transition from './component/Transition';
 import sliderStore from '../../store/sliderStore';
 
 const Slider = () => {
