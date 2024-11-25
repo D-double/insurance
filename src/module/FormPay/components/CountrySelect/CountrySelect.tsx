@@ -9,6 +9,7 @@ interface ICountrySelectProps {
 }
 const CountrySelect: FC<ICountrySelectProps> = ({ field }) => {
   const countriesArr = contries ? contries : [];
+  // console.log(countriesArr);
   const options: IOption[] = countriesArr.map((elem) => ({
     value: elem.id, label: elem.name
   }))
@@ -18,6 +19,7 @@ const CountrySelect: FC<ICountrySelectProps> = ({ field }) => {
       placeholder='Выберите страну:'
       options={options}
       classNamePrefix='custom-select'
+      onChange={()=>console.log(5)}
     />
   )
 }

@@ -8,7 +8,7 @@ interface ISlide {
 }
 const Slide:FC<ISlide> = ({children, title}) => {
   return (
-    <div className={s.slide}>
+    <div className={s.slide} >
       <h2 className={s.slide__title}>{title}</h2>
       {children}
       <p className={s.slide__desc}>

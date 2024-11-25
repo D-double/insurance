@@ -9,10 +9,10 @@ import PhoneInput from 'react-phone-input-2'
 import 'react-phone-input-2/lib/style.css'
 import { activities } from '../../../data.ts'
 import './assets/custom-select.scss'
-import { useSwiper } from 'swiper/react';
+import sliderStore from '../../store/sliderStore.ts';
 
 const FormPay = () => {
-  const swiper = useSwiper();
+  const {setHide} = sliderStore();
   const {
     control,
     register,
@@ -124,7 +124,7 @@ const FormPay = () => {
           )}
         />
       </div>
-      <button className={s.pay__btn} onClick={() => {swiper.slideNext()} }>Далее</button>
+      <button className={s.pay__btn} onClick={() => {setHide(false)} }>Далее</button>
     </form>
   )
 }

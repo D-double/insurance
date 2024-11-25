@@ -7,6 +7,7 @@
   padding-top: 45px;
   box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2);
   margin: 40px 0;
+  position: relative;
 
   &__back {
     width: 28px;
@@ -15,24 +16,42 @@
     right: 16px;
   }
 
-  .swiper-pagination {
-    top: 0;
-    bottom: auto;
-    padding: 15px;
-    right: 50px;
-    width: auto;
+  &__content, &__form {
+    transition: 0.5s;
+    transform: translateX(0);
+  }
+  
+  &__content_hide {
+    transform: translateX(-100%);
   }
 
-  .swiper-pagination-bullet {
+  &__form_hide {
+    transform: translateX(100%);
+  }
+
+  &__pagination {
+    position: absolute;
+    top: 0;
+    // bottom: auto;
+    padding: 19px;
+    right: 50px;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+  }
+
+  &__bullet {
     max-width: 50px;
     width: 100%;
     height: 5px;
     border-radius: 3px;
     background: #EAEAEF;
     opacity: 1;
+    
+    &.active{
+      background: var(--active);
+    }
   } 
   
-  .swiper-pagination-bullet-active{
-    background: var(--active);
-  }
 }

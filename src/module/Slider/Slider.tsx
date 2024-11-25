@@ -1,31 +1,37 @@
 import Slide from '../Slide/Slide'
 import Programs from '../Programs/Programs'
 import FormPay from '../FormPay/FormPay'
-import { Swiper, SwiperSlide } from 'swiper/react';
-import 'swiper/css'
-// import 'swiper/css';
-import 'swiper/css/pagination';
-import { Pagination } from 'swiper/modules';
 import './slider.scss'
 import PrevButton from './component/PrevButton';
+import Transition from './component/transition';
+import { useState } from 'react';
+import sliderStore from '../../store/sliderStore';
 
 const Slider = () => {
+  const {hide} = sliderStore();
+  
   return (
-    <Swiper
-      pagination={true} modules={[Pagination]} className='slider'
-    >
+    <>
+    <div className='slider'>
       <PrevButton/>
-      <SwiperSlide>
+      <div className="slider__pagination">
+        <div className={"slider__bullet " + (hide && 'active')}></div>
+        <div className={"slider__bullet " + (!hide && 'active')}></div>
+      </div>
+      <Transition showClass='slider__form'  hide={!hide} onMouseDown={()=>setHide(false)}>
         <Slide title="Покупка страхового полиса">
           <FormPay />
         </Slide>
-      </SwiperSlide>
-      <SwiperSlide className='slider__slide'>
-        <Slide title="Выберите программу">
-          <Programs />
-        </Slide>
-      </SwiperSlide>
-    </Swiper>
+      </Transition>
+      <Transition showClass="slider__content" hide={hide} onMouseDown={()=>setHide(true)}>
+        <div className="slider__slide">
+          <Slide title="Выберите программу">
+            <Programs />
+          </Slide>
+        </div>
+      </Transition>
+    </div>
+    </>
   )
 }
 

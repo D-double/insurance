@@ -1,10 +1,10 @@
+import sliderStore from "../../../store/sliderStore";
 import { backImg } from "../assets"
-import { useSwiper } from 'swiper/react';
 
 const PrevButton = () => {
-  const swiper = useSwiper();
+  const {setHide} = sliderStore();
   return (
-    <img src={backImg} alt="" className="slider__back" onClick={()=>{swiper.slidePrev()}}/>
+    <img src={backImg} alt="" className="slider__back" onClick={()=>{setHide(true)}}/>
   )
 }
 
