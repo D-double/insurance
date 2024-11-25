@@ -22,10 +22,12 @@
   }
   
   &__content_hide {
+    position: absolute;
     transform: translateX(-100%);
   }
 
   &__form_hide {
+    position: absolute;
     transform: translateX(100%);
   }
 

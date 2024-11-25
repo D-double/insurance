@@ -1,10 +1,10 @@
 export interface IPayData {
-  countries: number,
+  selectedCountrie: IOption,
   counts: number,
   startDate: Date,
   endDate: Date,
   activities: number,
-  phoneNum: string
+  phoneNum: string | undefined
 }
 
 export interface IOption {

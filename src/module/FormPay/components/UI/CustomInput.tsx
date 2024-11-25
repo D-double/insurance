@@ -13,6 +13,7 @@ interface CustomInputProps {
 }
 
 const CustomInput: FC<CustomInputProps> = ({ register, errors, label, type, holder, checked, value}) => {
+  
   if (type == 'radio') {
     return (
       <div className={s.enter}>

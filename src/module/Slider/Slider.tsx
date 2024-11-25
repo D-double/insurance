@@ -4,7 +4,6 @@ import FormPay from '../FormPay/FormPay'
 import './slider.scss'
 import PrevButton from './component/PrevButton';
 import Transition from './component/transition';
-import { useState } from 'react';
 import sliderStore from '../../store/sliderStore';
 
 const Slider = () => {
@@ -18,12 +17,12 @@ const Slider = () => {
         <div className={"slider__bullet " + (hide && 'active')}></div>
         <div className={"slider__bullet " + (!hide && 'active')}></div>
       </div>
-      <Transition showClass='slider__form'  hide={!hide} onMouseDown={()=>setHide(false)}>
+      <Transition showClass='slider__form'  hide={!hide}>
         <Slide title="Покупка страхового полиса">
           <FormPay />
         </Slide>
       </Transition>
-      <Transition showClass="slider__content" hide={hide} onMouseDown={()=>setHide(true)}>
+      <Transition showClass="slider__content" hide={hide}>
         <div className="slider__slide">
           <Slide title="Выберите программу">
             <Programs />

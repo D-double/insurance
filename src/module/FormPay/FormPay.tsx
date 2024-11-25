@@ -10,9 +10,11 @@ import 'react-phone-input-2/lib/style.css'
 import { activities } from '../../../data.ts'
 import './assets/custom-select.scss'
 import sliderStore from '../../store/sliderStore.ts';
+import formPayStore from '../../store/formPayStore.ts';
 
 const FormPay = () => {
   const {setHide} = sliderStore();
+  const {activities:activitiesChecked, setActivities, countsList, counts, setCounts, countries } = formPayStore();
   const {
     control,
     register,
@@ -21,8 +23,13 @@ const FormPay = () => {
     formState: {
       errors,
     }
-  } = useForm<IPayData>({ mode: 'onChange' });
-
+  } = useForm<IPayData>({ 
+    mode: 'onChange',
+    defaultValues: {
+      selectedCountrie: countries[0],
+    },
+  });
+  
   const payData: SubmitHandler<IPayData> = async (data) => {
     try {
       console.log(data);
@@ -36,7 +43,7 @@ const FormPay = () => {
       <div className={s.pay__wrapper}>
         <CustomSubtitle title='Страна путешествия' help='Страна путешествия' />
         <Controller
-          name="countries"
+          name="selectedCountrie"
           control={control}
           render={({ field }) => (
             <CountrySelect field={field} />
@@ -45,25 +52,25 @@ const FormPay = () => {
       </div>
       <div className={s.pay__wrapper}>
         <CustomSubtitle title='Тип покрытия' help='Тип покрытия' />
-        <CustomInput
-          register={
-            register('counts')
-          }
-          value={1}
-          errors={errors.counts}
-          label="Однократное путешествие"
-          type='radio'
-          checked={true}
-        />
-        <CustomInput
-          register={
-            register('counts')
-          }
-          value={2}
-          errors={errors.counts}
-          label="Многократное путешествие"
-          type='radio'
-        />
+        {
+          countsList.map((elem)=>(
+            <CustomInput
+              key={elem.id}
+              register={
+                register('counts', {
+                  onChange:(e)=>{
+                      setCounts(+e.target.value);
+                  }
+                })
+              }
+              value={elem.id}
+              errors={errors.counts}
+              label={elem.name}
+              type='radio'
+              checked={elem.id == counts ? true : false}
+            />
+          ))
+        }
 
       </div>
       <div className={s.pay__wrapper}>
@@ -94,14 +101,18 @@ const FormPay = () => {
                 activities.map((elem) => (
                   <CustomInput
                     register={
-                      register('activities')
+                      register('activities', {
+                        onChange:(e)=>{
+                            setActivities(+e.target.value);
+                        }
+                      })
                     }
                     key={elem.id}
                     value={elem.id}
                     errors={errors.activities}
                     label={elem.name}
                     type='radio'
-                    checked={elem.id == 0 ? true : false}
+                    checked={elem.id == activitiesChecked ? true : false}
                   />
                 ))
               }
@@ -114,6 +125,9 @@ const FormPay = () => {
         <CustomSubtitle title='Номер мобильного телефона' help='Номер мобильного телефона' />
         <Controller
           name="phoneNum"
+          // rules={{
+          //   required: true,
+          // }}
           control={control}
           render={({ field }) => (
             <PhoneInput
