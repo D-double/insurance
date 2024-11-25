@@ -1,13 +1,11 @@
 .enter {
   display: flex;
   flex-direction: column;
-  gap: 15px;
-  max-width: 324px;
-  width: 100%;
 
   label {
     display: flex;
     gap: 5px;
+    font-size: 14px;
     &:has(img) {
       flex-direction: row;
     }
@@ -27,15 +25,28 @@
 
     &::placeholder {
       color: rgb(196, 196, 196);
-      font-size: 17px;
-      font-weight: 400;
     }
+  }
+
+  &__radio {
+    display: none;
+
+    &:checked ~ .enter__checkOn {
+      display: inline-block;
+    }
+    &:not(:checked) ~ .enter__checkOff {
+      display: inline-block;
+    }
+  }
+
+  &__checkOn, &__checkOff {
+    width: 12px;
+    display: none;
   }
 
   &__error {
     color: red;
     font-size: 12px;
-    font-weight: 400;
   }
 
   &__btn {

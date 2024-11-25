@@ -4,6 +4,8 @@
   --font-base: 'Noah';
   --body: #EFF2FB;
   --color: #636368;
+  --title: #00237E;
+  --active: #02C463;
 }
 
 * {
@@ -34,7 +36,7 @@ textarea {
   outline: none;
   cursor: pointer;
   background: none;
-  font-family: 'OpenSans';
+  font-family: inherit;
   color: inherit;
 }
 
@@ -49,3 +51,4 @@ button:disabled {
   margin: 0 auto;
   padding: 0 12px;
 }
+

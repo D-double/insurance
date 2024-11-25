@@ -5,9 +5,14 @@ import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { IPayData } from './types';
 import CustomInput from './components/UI/CustomInput';
 import DateSelect from './components/DateSelect/DateSelect';
-
+import PhoneInput from 'react-phone-input-2'
+import 'react-phone-input-2/lib/style.css'
+import { activities } from '../../../data.ts'
+import './assets/custom-select.scss'
+import { useSwiper } from 'swiper/react';
 
 const FormPay = () => {
+  const swiper = useSwiper();
   const {
     control,
     register,
@@ -15,7 +20,6 @@ const FormPay = () => {
     reset,
     formState: {
       errors,
-      isValid
     }
   } = useForm<IPayData>({ mode: 'onChange' });
 
@@ -27,55 +31,100 @@ const FormPay = () => {
     }
     reset()
   }
-  // const countriesController = [...Array(6)]
   return (
     <form onSubmit={handleSubmit(payData)} className={s.pay}>
-      <h2 className={s.pay__title}>Покупка страхового полиса</h2>
-      <CustomSubtitle title='Страна путешествия' help='Страна путешествия' />
+      <div className={s.pay__wrapper}>
+        <CustomSubtitle title='Страна путешествия' help='Страна путешествия' />
+        <Controller
+          name="countries"
+          control={control}
+          render={({ field }) => (
+            <CountrySelect field={field} />
+          )}
+        />
+      </div>
+      <div className={s.pay__wrapper}>
+        <CustomSubtitle title='Тип покрытия' help='Тип покрытия' />
+        <CustomInput
+          register={
+            register('counts')
+          }
+          value={1}
+          errors={errors.counts}
+          label="Однократное путешествие"
+          type='radio'
+          checked={true}
+        />
+        <CustomInput
+          register={
+            register('counts')
+          }
+          value={2}
+          errors={errors.counts}
+          label="Многократное путешествие"
+          type='radio'
+        />
 
-      <Controller
-        name="countries"
-        control={control}
-        render={({ field }) => (
-          <CountrySelect field={field} />
+      </div>
+      <div className={s.pay__wrapper}>
+        <CustomSubtitle title='Начало страхования' help='Начало страхования' />
+        <Controller
+          name="startDate"
+          control={control}
+          render={({ field }) => (
+            <DateSelect field={field} showDefault={true} />
+          )}
+        />
+
+      </div>
+      <div className={s.pay__wrapper}>
+        <CustomSubtitle title='Конец страхования' help='Конец страхования' />
+        <Controller
+          name="endDate"
+          control={control}
+          render={({ field }) => (
+            <DateSelect field={field} />
+          )}
+        />
+        {activities && (
+          <>
+            <CustomSubtitle title='Цель' help='Цель' />
+            <div className={s.pay__activities}>
+              {
+                activities.map((elem) => (
+                  <CustomInput
+                    register={
+                      register('activities')
+                    }
+                    key={elem.id}
+                    value={elem.id}
+                    errors={errors.activities}
+                    label={elem.name}
+                    type='radio'
+                    checked={elem.id == 0 ? true : false}
+                  />
+                ))
+              }
+            </div>
+          </>
         )}
-      />
-      
-      <CustomSubtitle title='Тип покрытия' help='Тип покрытия' />
-      <CustomInput
-        register={
-          register('counts')
-        }
-        value={1}
-        errors={errors.counts}
-        label="Однократное путешествие"
-        type='radio'
-        checked={true}
-      />
-      <CustomInput
-        register={
-          register('counts')
-        }
-        value={2}
-        errors={errors.counts}
-        label="Многократное путешествие"
-        type='radio'
-      />
-      <CustomSubtitle title='Начало страхования' help='Начало страхования' />
-      <Controller
-        name="startDate"
-        control={control}
-        render={({ field }) => (
-          <DateSelect field={field} />
-        )}
-      />
-      {/* <DateSelect
-        register={
-          register('date')
-        }
-        errors={errors.date}
-      /> */}
-      <button>Далее</button>
+
+      </div>
+      <div className={s.pay__wrapper}>
+        <CustomSubtitle title='Номер мобильного телефона' help='Номер мобильного телефона' />
+        <Controller
+          name="phoneNum"
+          control={control}
+          render={({ field }) => (
+            <PhoneInput
+              {...field}
+              placeholder="Enter phone number"
+              country="uz"
+            />
+          )}
+        />
+      </div>
+      <button className={s.pay__btn} onClick={() => {swiper.slideNext()} }>Далее</button>
     </form>
   )
 }

@@ -1,0 +1,53 @@
+$first-column: 16px;
+
+.programsItem{
+  display: grid;
+  grid-template-columns: $first-column 1fr;
+  gap: 8px;
+  padding: 7px 12px;
+  background: #EFEFF4;
+  border: 1px solid #D5D5E0;
+  border-radius: 8px;
+  color: var(--title);
+  
+  &__content {
+    grid-column: 2;    
+  }
+
+  img {
+    width: $first-column;
+    margin-top: 3px;
+  }
+
+  &__checkOff {
+    display: inline-block;
+  }
+
+  &__checkOn {
+    display: none;
+  }
+
+  &__title {
+    font-weight: 400;
+  }
+
+  &__desc {
+    font-size: 14px;
+    color: #696970;
+  }
+  
+  $p: &;
+  &.active {
+    background: #fff;
+    color: var(--active);
+    box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.2);
+
+    #{$p}__checkOff {
+      display: none;
+    }
+    
+    #{$p}__checkOn {
+      display: inline-block;
+    }
+  }
+}

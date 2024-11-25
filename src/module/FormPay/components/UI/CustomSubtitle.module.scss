@@ -1,11 +1,9 @@
-$size: 16px;
+$size: 18px;
 
 .subtitle {
   display: flex;
   justify-content: space-between;
-  max-width: 200px;
-  width: 100%;
-
+  margin-right: 30px;
   &__name {
     font-size: $size;
   }

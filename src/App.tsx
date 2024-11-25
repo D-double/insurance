@@ -1,10 +1,11 @@
-import FormPay from "./module/FormPay/FormPay"
+import Slider from "./module/Slider/Slider"
+
 
 function App() {
 
   return (
     <div className="container">
-     <FormPay/>
+      <Slider/>
     </div>
   )
 }

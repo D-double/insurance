@@ -1,0 +1,28 @@
+.pay {
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+
+  &__wrapper {
+    display: grid;
+    gap: 10px;
+  }
+
+  &__activities {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 30px;
+  }
+
+  &__btn {
+    padding: 6px;
+    min-width: 115px;
+    background: var(--active);
+    color: #fff;
+    border-radius: 8px;
+    width: max-content;
+    font-weight: 500;
+    font-size: 18px;
+  }
+}

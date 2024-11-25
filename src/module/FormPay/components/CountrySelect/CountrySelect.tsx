@@ -17,6 +17,7 @@ const CountrySelect: FC<ICountrySelectProps> = ({ field }) => {
       {...field}
       placeholder='Выберите страну:'
       options={options}
+      classNamePrefix='custom-select'
     />
   )
 }

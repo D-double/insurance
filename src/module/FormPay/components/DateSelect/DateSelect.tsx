@@ -1,6 +1,6 @@
 import { FC, useEffect, useState } from 'react'
 import s from './DateSelect.module.scss'
-import { UseFormRegisterReturn, FieldError, Merge, FieldErrorsImpl, Controller, ControllerRenderProps } from 'react-hook-form'
+import { ControllerRenderProps } from 'react-hook-form'
 import { calendarImg } from '../../assets'
 import DatePicker from 'react-datepicker'
 import "react-datepicker/dist/react-datepicker.css";
@@ -10,11 +10,13 @@ import { IPayData } from '../../types'
 import getDayOptions from '../../utils/getDayOptions'
 
 interface DateSelectProps {
-  field: ControllerRenderProps<IPayData, "startDate">
+  field: ControllerRenderProps<IPayData>,
+  showDefault?: boolean
 }
-const DateSelect: FC<DateSelectProps> = ({ field }) => {
-  const { onChange, onBlur, value, ref } = field;
-  let currentDate = new Date()
+const DateSelect: FC<DateSelectProps> = ({ field, showDefault }) => {
+  const { onChange, value} = field;
+  const [showDate, setShowDate] = useState(showDefault);
+  const currentDate = new Date()
   const [startDate, setStartDate] = useState(currentDate);
   const [show, setShow] = useState(false);
   const [month, setMonth] = useState(currentDate.getMonth()+1);
@@ -29,6 +31,7 @@ const DateSelect: FC<DateSelectProps> = ({ field }) => {
   }));
   const changeStartDate = ()=>{
     setStartDate(new Date(year, month-1, day))
+    return ()=>{setShowDate(true);}
   }
   useEffect(changeStartDate, [day, month, year])
   useEffect(()=>{
@@ -42,32 +45,36 @@ const DateSelect: FC<DateSelectProps> = ({ field }) => {
     <div className={s.date}>
       <div className={s.date__selects}>
         <Select
+          classNamePrefix='custom-select'
           placeholder='DD'
           options={dayOptions}
-          value={dayOptions[day-1]}
-          onChange={(opt)=>setDay(opt.value)}
+          value={showDate && dayOptions[day-1]}
+          onChange={(opt)=> opt && setDay(opt.value)}
         />
         <Select
+          classNamePrefix='custom-select'
           placeholder='MM'
           options={monthsOptions}
-          value={monthsOptions[month-1]}
-          onChange={(opt)=>setMonth(opt.value)}
+          value={showDate && monthsOptions[month-1]}
+          onChange={(opt)=>opt && setMonth(opt.value)}
         />
         <Select
+          classNamePrefix='custom-select'
           placeholder='YYYY'
           options={yearsOptions}
-          value={yearsOptions[yearsOptions.findIndex((elem)=>elem.value == year)]}
-          onChange={(opt)=>setYear(opt.value)}
+          value={showDate && yearsOptions[yearsOptions.findIndex((elem)=>elem.value == year)]}
+          onChange={(opt)=>opt && setYear(opt.value)}
         />
       </div>
       <div className={s.date__wrapper}>
-        <img src={calendarImg} alt="" className={s.date__img} onClick={()=>setShow(!show)}/>
+        <button type='button' className={s.date__btn} onClick={()=>setShow(!show)}>
+          <img src={calendarImg} alt="" className={s.date__img}/>
+        </button>
         <div className={`${s.date__picker} ${show ? s.active : ''}`}>
           <DatePicker
             selected={value}
             onChange={(date) => {setStartDate(date); onChange(date)}}
             inline
-            onBlur={onBlur}
           />
         </div>
       </div>

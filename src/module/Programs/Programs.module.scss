@@ -1,0 +1,21 @@
+.programs {
+  display: grid;
+  gap: 12px;
+
+  &__title {
+    font-size: 18px;
+    color: var(--title);
+    text-align: center;
+    padding: 8px 0;
+  }
+
+  &__desc {
+    font-weight: 700;
+    color: #fff;
+    background: var(--active);
+    padding: 6px 15px;
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+  }
+}
