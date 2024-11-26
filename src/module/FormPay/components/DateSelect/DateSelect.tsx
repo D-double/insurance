@@ -11,10 +11,10 @@ import getDayOptions from '../../utils/getDayOptions'
 
 interface DateSelectProps {
   field: ControllerRenderProps<IPayData, "startDate" | 'endDate'>,
-  showDefault?: boolean
+  showDefault?: boolean,
 }
 const DateSelect: FC<DateSelectProps> = ({ field, showDefault }) => {
-  const { onChange, value} = field;
+  const { onChange, value } = field;
   const [showDate, setShowDate] = useState(showDefault);
   const [startDate, setStartDate] = useState(value);
   const [show, setShow] = useState(false);

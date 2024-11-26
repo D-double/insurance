@@ -12,6 +12,7 @@ import formPayStore from '../../store/formPayStore.ts';
 import { FormControlLabel, RadioGroup } from '@mui/material';
 import CustomRadio from './components/UI/CustomRadio.tsx';
 import { minusImg, plusImg } from './assets/index.ts';
+import getDayNow from './utils/getDayNow.ts';
 
 const FormPay = () => {
   const { setHide } = sliderStore();
@@ -20,6 +21,7 @@ const FormPay = () => {
     control,
     handleSubmit,
     reset,
+    watch,
     formState: {
       errors,
     }
@@ -34,9 +36,10 @@ const FormPay = () => {
       phoneNum
     },
   });
+  const startDateSelected = watch('startDate');
   const errorsValue = Object.values(errors);
   const { fields, append, remove } = useFieldArray({
-    rules:{
+    rules: {
       required: {
         value: true,
         message: 'Нужно выбрать хотя бы один город'
@@ -70,13 +73,13 @@ const FormPay = () => {
         <CustomSubtitle title='Страна путешествия' help='Страна путешествия' />
         <div className={s.pay__country}>
           <CountrySelect />
-          <button type='button' onClick={()=>append(countries[0])} className={s.pay__countryBtn}>
-            <img src={plusImg} alt=""/>
+          <button type='button' onClick={() => append(countries[0])} className={s.pay__countryBtn}>
+            <img src={plusImg} alt="" />
           </button>
           <p className={s.pay__error}>{errors.selectedCountryArray && <>{errors.selectedCountryArray.root?.message}</>}</p>
         </div>
         {
-          fields.map((item, index: number ) => (
+          fields.map((item, index: number) => (
             <div key={item.id} className={s.pay__country}>
               <Controller
                 name={`selectedCountryArray.${index}`}
@@ -85,9 +88,9 @@ const FormPay = () => {
                   <CountrySelect field={field} />
                 )}
               />
-              <button type='button' onClick={()=>remove(index)} className={s.pay__countryBtn}>
-                <img src={minusImg} alt=""/>
-              </button>              
+              <button type='button' onClick={() => remove(index)} className={s.pay__countryBtn}>
+                <img src={minusImg} alt="" />
+              </button>
             </div>
           ))
         }
@@ -119,21 +122,28 @@ const FormPay = () => {
         <Controller
           name="startDate"
           control={control}
+          rules={{
+            validate:(value) =>  value.getTime() >= getDayNow().getTime() || 'Дата начала страхования не может быть раньше текущего дня!',
+          }}
           render={({ field }) => (
             <DateSelect field={field} showDefault={true} />
           )}
         />
-
+        <p className={s.pay__error}>{errors.startDate && <>{errors.startDate.message}</>}</p>
       </div>
       <div className={s.pay__wrapper}>
         <CustomSubtitle title='Конец страхования' help='Конец страхования' />
         <Controller
           name="endDate"
           control={control}
+          rules={{
+            validate:(value) => value.getTime() >= startDateSelected.getTime() || 'Дата конца страхования не может быть раньше её начала!',
+          }}
           render={({ field }) => (
-            <DateSelect field={field} />
+            <DateSelect field={field}/>
           )}
         />
+        <p className={s.pay__error}>{errors.endDate && <>{errors.endDate.message}</>}</p>
         {activitiesList && (
           <>
             <CustomSubtitle title='Цель' help='Цель' />
