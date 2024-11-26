@@ -75,7 +75,7 @@ const FormPay = () => {
 
         <Controller
               render={({ field }) => (
-                <RadioGroup aria-label="gender" {...field}>
+                <RadioGroup aria-label="Тип покрытия" {...field}>
                   {
                     countsList.map((elem) => (
                       <FormControlLabel 
