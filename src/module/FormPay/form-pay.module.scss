@@ -9,15 +9,27 @@
     gap: 10px;
   }
 
-  &__activities {
+  &__count {
+    span {
+      font-size: 14px;
+      font-family: inherit;
+    }
+  }
+
+  .pay &__activities {
     display: flex;
     flex-wrap: wrap;
     gap: 10px 30px;
+    flex-direction: row;
+    span {
+      font-size: 14px;
+      font-family: inherit;
+    }
 
     @media(max-width: 450px) {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 30px;
+      gap: 10px;
     }
   }
 

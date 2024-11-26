@@ -1,25 +1,22 @@
 import { FC } from 'react'
 import Select from 'react-select'
 import { ControllerRenderProps } from 'react-hook-form'
-import { IOption, IPayData } from '../../types.ts'
+import { IPayData } from '../../types.ts'
 import formPayStore from '../../../../store/formPayStore.ts'
 
 interface ICountrySelectProps {
   field: ControllerRenderProps<IPayData, "selectedCountry">
 }
 const CountrySelect: FC<ICountrySelectProps> = ({ field }) => {
-  const { countries, setSelectedCountry, selectedCountry } = formPayStore();
-
+  const { countries } = formPayStore();
+  const {value, onChange} = field
   return (
     <Select
-      {...field}
       placeholder='Выберите страну:'
       options={countries}
       classNamePrefix='custom-select'
-      onChange={(e) => {
-        setSelectedCountry(e as IOption)
-      }}
-      value={selectedCountry}
+      onChange={onChange}
+      value={value}
     />
   )
 }

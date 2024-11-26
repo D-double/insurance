@@ -27,12 +27,12 @@ const YourData = () => {
     {
       id: 'startDate',
       title: 'Начало страхования',
-      value: startDate.toLocaleDateString('en-US') 
+      value: startDate.toLocaleDateString() 
     },
     {
       id: 'endDate',
       title: 'Конец страхования',
-      value: endDate.toLocaleDateString('en-US') 
+      value: endDate.toLocaleDateString() 
     },
     {
       id: 'activities',

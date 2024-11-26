@@ -3,20 +3,20 @@ import s from './form-pay.module.scss'
 import CountrySelect from './components/CountrySelect/CountrySelect'
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { IPayData } from './types';
-import CustomInput from './components/UI/CustomInput';
 import DateSelect from './components/DateSelect/DateSelect';
 import PhoneInput from 'react-phone-input-2'
 import 'react-phone-input-2/lib/style.css'
 import './assets/custom-select.scss'
 import sliderStore from '../../store/sliderStore.ts';
 import formPayStore from '../../store/formPayStore.ts';
+import { FormControlLabel, RadioGroup } from '@mui/material';
+import CustomRadio from './components/UI/CustomRadio.tsx';
 
 const FormPay = () => {
   const { setHide } = sliderStore();
   const { activitiesList, activities: activitiesChecked, setActivities, countsList, counts, setCounts, startDate, endDate, phoneNum, selectedCountry, setSelectedCountry, setStartDate, setEndDate, setPhoneNum } = formPayStore();
   const {
     control,
-    register,
     handleSubmit,
     reset,
     formState: {
@@ -24,10 +24,15 @@ const FormPay = () => {
     }
   } = useForm<IPayData>({
     mode: 'onBlur',
-    defaultValues: {
+    // defaultValues:{
+    //   counts
+    // },
+    values: {
       selectedCountry,
+      counts,
       startDate,
       endDate,
+      activities: activitiesChecked,
       phoneNum
     },
   });
@@ -65,26 +70,29 @@ const FormPay = () => {
         />
       </div>
       <div className={s.pay__wrapper}>
+        
         <CustomSubtitle title='Тип покрытия' help='Тип покрытия' />
-        {
-          countsList.map((elem) => (
-            <CustomInput
-              key={elem.id}
-              register={
-                register('counts', {
-                  onChange: (e) => {
-                    setCounts(+e.target.value);
+
+        <Controller
+              render={({ field }) => (
+                <RadioGroup aria-label="gender" {...field}>
+                  {
+                    countsList.map((elem) => (
+                      <FormControlLabel 
+                        className={s.pay__count}                        
+                        key={elem.id}
+                        value={elem.id}
+                        control={<CustomRadio/>}
+                        label={elem.name}
+                      />
+                    ))
                   }
-                })
-              }
-              value={elem.id}
-              errors={errors.counts}
-              label={elem.name}
-              type='radio'
-              checked={elem.id == counts ? true : false}
+                </RadioGroup>
+              )}
+              name="counts"
+              control={control}
             />
-          ))
-        }
+        
 
       </div>
       <div className={s.pay__wrapper}>
@@ -111,25 +119,26 @@ const FormPay = () => {
           <>
             <CustomSubtitle title='Цель' help='Цель' />
             <div className={s.pay__activities}>
-              {
-                activitiesList.map((elem) => (
-                  <CustomInput
-                    register={
-                      register('activities', {
-                        onChange: (e) => {
-                          setActivities(+e.target.value);
-                        }
-                      })
+              <Controller
+                render={({ field }) => (
+                  <RadioGroup aria-label="Цель" className={s.pay__activities} {...field}>
+                    {
+                      activitiesList.map((elem) => (
+                        <FormControlLabel 
+                          
+                          key={elem.id}
+                          value={elem.id}
+                          control={<CustomRadio/>}
+                          label={elem.name}
+                        />
+                      ))
                     }
-                    key={elem.id}
-                    value={elem.id}
-                    errors={errors.activities}
-                    label={elem.name}
-                    type='radio'
-                    checked={elem.id == activitiesChecked ? true : false}
-                  />
-                ))
-              }
+                  </RadioGroup>
+                )}
+                name="activities"
+                control={control}
+              />
+
             </div>
           </>
         )}

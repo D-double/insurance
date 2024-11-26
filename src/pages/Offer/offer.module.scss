@@ -7,7 +7,7 @@
   gap: 40px;
 
   @media(max-width: 768px){
-    flex-wrap: wrap;
+    flex-wrap: wrap-reverse;
     justify-content: center;
   }
   
