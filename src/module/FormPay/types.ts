@@ -1,5 +1,5 @@
 export interface IPayData {
-  selectedCountry: IOption,
+  selectedCountryArray: IOption[],
   counts: number,
   startDate: Date,
   endDate: Date,

@@ -3,7 +3,7 @@ import s from './your-data.module.scss'
 
 const YourData = () => {
   const {
-    selectedCountry,
+    selectedCountryArray,
     countsList,
     counts,
     startDate,
@@ -17,7 +17,7 @@ const YourData = () => {
     {
       id: 'selectedCountry',
       title: 'Страна путешествия',
-      value: selectedCountry?.label
+      value: selectedCountryArray.map((elem)=>elem.label).join(', ')
     },
     {
       id: 'counts',

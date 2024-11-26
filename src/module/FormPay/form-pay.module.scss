@@ -1,3 +1,5 @@
+$size: 30px;
+
 .pay {
   background: #fff;
   display: flex;
@@ -7,6 +9,27 @@
   &__wrapper {
     display: grid;
     gap: 10px;
+  }
+
+  &__country {
+    display: grid;
+    grid-template-columns: 1fr $size;
+    gap: 10px;
+    align-items: center;
+  }
+
+  &__countryBtn {
+    width: $size;
+    height: $size;
+    border-radius: 8px;
+    background: var(--title);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    img {
+      width: 12px;
+    }
   }
 
   &__count {

@@ -5,6 +5,7 @@ form .custom-select {
     border: none;
     border-radius: 8px;
     font-size: 14px;
+    min-height: 30px;
   }
   
   &__placeholder {
@@ -13,5 +14,13 @@ form .custom-select {
 
   &__indicator-separator {
     display: none;
+  }
+
+  &__indicator {
+    padding: 4px 8px;
+  }
+
+  &__menu {
+    margin-top: 4px;
   }
 }

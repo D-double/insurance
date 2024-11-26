@@ -16,7 +16,7 @@ interface IFormPayStore extends IPayData {
   countsList: ICounts[]
   activitiesList: IActivities[]
   countries: IOption[]
-  setSelectedCountry: (value: IOption) => void;
+  setSelectedCountryArray: (value: IOption[]) => void;
   setCounts: (value: number) => void;
   setStartDate: (value: Date) => void;
   setEndDate: (value: Date) => void;
@@ -36,8 +36,8 @@ const formPayStore = create<IFormPayStore>()(devtools(
       { id: 2, name: 'Многократное путешествие' },
     ],
     countries: options,
-    selectedCountry: options[0],
-    setSelectedCountry: (value) => set({ selectedCountry: value }),
+    selectedCountryArray:[],
+    setSelectedCountryArray: (value) => set({ selectedCountryArray: value }),
     counts: 1,
     setCounts: (value) => set({ counts: value }),
     startDate: new Date(),
