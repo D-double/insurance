@@ -16,7 +16,7 @@ import getDayNow from './utils/getDayNow.ts';
 
 const FormPay = () => {
   const { setHide } = sliderStore();
-  const { countries, activitiesList, activities: activitiesChecked, setActivities, countsList, counts, setCounts, startDate, endDate, phoneNum, selectedCountryArray, setSelectedCountryArray, setStartDate, setEndDate, setPhoneNum } = formPayStore();
+  const { countries, currentActivitiesList, activitiesList, activities: activitiesChecked, setActivities, countsList, counts, setCounts, startDate, endDate, phoneNum, selectedCountryArray, setSelectedCountryArray, setStartDate, setEndDate, setPhoneNum } = formPayStore();
   const {
     control,
     handleSubmit,
@@ -152,7 +152,8 @@ const FormPay = () => {
                 render={({ field }) => (
                   <RadioGroup aria-label="Цель" className={s.pay__activities} {...field}>
                     {
-                      activitiesList.map((elem) => (
+                      activitiesList.filter((elem)=> currentActivitiesList.includes(elem.id))
+                      .map((elem) => (
                         <FormControlLabel
 
                           key={elem.id}
