@@ -23,7 +23,7 @@ const CountrySelect: FC<ICountrySelectProps> = ({ field }) => {
   } else {
     return (
       <Select
-        placeholder='Выберите страну:'
+        placeholder='Добавьте страну:'
         // options={countries}
         classNamePrefix='custom-select'
         isDisabled={true}

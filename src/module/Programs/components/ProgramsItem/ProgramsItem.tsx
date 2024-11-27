@@ -1,11 +1,11 @@
 import { Dispatch, FC, SetStateAction } from 'react'
 import { checkOffImg, checkOnImg } from '../../assets'
 import s from './ProgramsItem.module.scss'
-import { IProgram } from '../../types'
+import { ICurrentProgram } from '../../../../store/programsStore'
 
 interface IProgramsItemProps {
   isActive?: boolean
-  program: IProgram
+  program: ICurrentProgram
   onClick: Dispatch<SetStateAction<null | number>>
   desc: {id: number, desc: string}
 }
@@ -17,6 +17,7 @@ const ProgramsItem: FC<IProgramsItemProps> = ({program, isActive, onClick, desc}
       <img src={checkOffImg} alt="" className={s.programsItem__checkOff} />
       <h3 className={s.programsItem__title}>{name}</h3>
       <div className={s.programsItem__content}>
+        <p className={s.programsItem__desc}>Действует в городе: {program.countries}</p>
         <h4 className={s.programsItem__price}>Общее покрытие - {liability} EUR</h4>
         <p className={s.programsItem__desc}>{desc.desc}</p>
       </div>
