@@ -8,7 +8,7 @@ interface ICountrySelectProps {
   field?: ControllerRenderProps<IPayData, `selectedCountryArray.${number}`>
 }
 const CountrySelect: FC<ICountrySelectProps> = ({ field }) => {
-  const { countries } = formPayStore();
+  const { countries, addCountry } = formPayStore();
   if (field) {
     const { value, onChange } = field
     return (
@@ -23,7 +23,7 @@ const CountrySelect: FC<ICountrySelectProps> = ({ field }) => {
   } else {
     return (
       <Select
-        placeholder='Добавьте страну:'
+        placeholder={addCountry.label}
         // options={countries}
         classNamePrefix='custom-select'
         isDisabled={true}

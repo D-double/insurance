@@ -11,16 +11,15 @@ import sliderStore from '../../store/sliderStore.ts';
 import formPayStore from '../../store/formPayStore.ts';
 import { FormControlLabel, RadioGroup } from '@mui/material';
 import CustomRadio from './components/UI/CustomRadio.tsx';
-import { minusImg, plusImg } from './assets/index.ts';
+import { minusDarkImg, minusImg, plusDarkImg, plusImg } from './assets/index.ts';
 import getDayNow from './utils/getDayNow.ts';
 
 const FormPay = () => {
   const { setHide } = sliderStore();
-  const { countries, currentActivitiesList, activitiesList, activities: activitiesChecked, setActivities, countsList, counts, setCounts, startDate, endDate, phoneNum, selectedCountryArray, setSelectedCountryArray, setStartDate, setEndDate, setPhoneNum } = formPayStore();
+  const { currentActivitiesList, activitiesList, activities: activitiesChecked, setActivities, countsList, counts, setCounts, startDate, endDate, phoneNum, selectedCountryArray, setSelectedCountryArray, setStartDate, setEndDate, setPhoneNum, addCountry } = formPayStore();
   const {
     control,
     handleSubmit,
-    reset,
     watch,
     formState: {
       errors,
@@ -38,7 +37,7 @@ const FormPay = () => {
   });
   const startDateSelected = watch('startDate');
   const errorsValue = Object.values(errors);
-  const { fields, append, remove } = useFieldArray({
+  const { fields, remove, prepend } = useFieldArray({
     rules: {
       required: {
         value: true,
@@ -60,11 +59,9 @@ const FormPay = () => {
         setPhoneNum(phoneNum)
         setHide(false)
       }
-      reset()
     } catch (error) {
       console.log(error);
     }
-    reset()
   }
   return (
     <form onSubmit={handleSubmit(payData)} className={s.pay}>
@@ -72,8 +69,9 @@ const FormPay = () => {
         <CustomSubtitle title='Страна путешествия' help='Страна путешествия' />
         <div className={s.pay__country}>
           <CountrySelect />
-          <button type='button' onClick={() => append(countries[0])} className={s.pay__countryBtn}>
+          <button type='button' onClick={() => prepend(addCountry)} className={s.pay__countryBtn}>
             <img src={plusImg} alt="" />
+            <img src={plusDarkImg} alt="" />
           </button>
           <p className={s.pay__error}>{errors.selectedCountryArray && <>{errors.selectedCountryArray.root?.message}</>}</p>
         </div>
@@ -89,6 +87,7 @@ const FormPay = () => {
               />
               <button type='button' onClick={() => remove(index)} className={s.pay__countryBtn}>
                 <img src={minusImg} alt="" />
+                <img src={minusDarkImg} alt="" />
               </button>
             </div>
           ))

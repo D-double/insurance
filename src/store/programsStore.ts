@@ -3,6 +3,7 @@ import { devtools } from 'zustand/middleware'
 import { programs, contries } from '../../data.ts'
 import { IProgramsCountries } from '../module/Programs/types.ts';
 import { IOption } from '../module/FormPay/types.ts';
+import toCapitalize from '../utils/toCapitalize.ts';
 
 interface IProgram {
   id: number;
@@ -90,7 +91,7 @@ const programsStore = create<IProgramsStore>()(devtools(
         const c = a.map((elem) => {
           const text = {
             id: elem,
-            name: list.filter((item) => item.id == elem).map((item) => item.name).join(', ')
+            name: list.filter((item) => item.id == elem).map((item) => toCapitalize(item.name)).join(', ')
           }
           return text
         })

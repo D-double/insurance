@@ -11,7 +11,8 @@ const Programs = () => {
   const [rateEur, setRateEur] = useState(0);
   useEffect(() => {
     if (selectedCountryArray.length) {
-      setCurrentPrograms(selectedCountryArray)
+      setCurrentPrograms(selectedCountryArray);
+      setCheckedProgram(null)
     }
   }, [selectedCountryArray])
 
