@@ -61,7 +61,6 @@ const FormPay = () => {
         setHide(false)
       }
       reset()
-      console.log(data);
     } catch (error) {
       console.log(error);
     }

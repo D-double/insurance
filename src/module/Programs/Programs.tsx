@@ -15,7 +15,6 @@ const Programs = () => {
     }
   }, [selectedCountryArray])
 
-  console.log(currentPrograms);
   const programs = programsList;
   const selectedProgram = programs?.find((elem) => elem.id == checkedProgram)
   const getRate = async () => {
